@@ -1,0 +1,37 @@
+name: test1
+
+on:
+  workflow_call:
+    inputs:
+      ECHO:
+        default: "ECHO"
+        type: string
+        required: false
+    outputs:
+      ECHO_OUT_1:
+        value: ${{ jobs.test1.outputs.ECHO_OUT }}    
+      ECHO_OUT_2:
+        value: ${{ jobs.test2.outputs.ECHO_OUT }}
+
+jobs:
+  test1:
+    name: test
+    runs-on: generic
+    outputs:
+      ECHO_OUT: ${{ steps.echo.outputs.ECHO_OUT }}
+    steps:
+      - name: echo
+        run: |
+            echo "ECHO_OUT=${{ inputs.ECHO }}" >> $GITHUB_OUTPUT
+  test2:
+    needs: test1
+    name: test2
+    outputs:
+        ECHO_OUT: ${{ steps.echo2.outputs.ECHO_OUT }}
+    runs-on: generic
+    steps:
+        - name: echo2
+          run: |
+            echo "TEST: ${{ inputs.ECHO }}"
+            echo "OUT: ${{ needs.test1.outputs.ECHO_OUT }}"
+            echo "ECHO_OUT=${{ needs.test1.outputs.ECHO_OUT }}-test-2" >> $GITHUB_OUTPUT
