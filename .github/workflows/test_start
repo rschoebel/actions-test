@@ -1,0 +1,19 @@
+name: test2
+
+on:
+  workflow_dispatch:
+
+jobs:
+  test11:
+    uses: rschoebel/actions-test/.github/workflows/test_base.yml@captain
+    with:
+      ECHO: "Hallo"
+  test9999:
+    needs: test11
+    name: test
+    runs-on: generic
+    steps:
+        - name: echo-2
+          run: |
+            echo "TEST: ${{ job.test11.outputs.ECHO_OUT_1 }}"
+            echo "TEST: ${{ needs.test11.outputs.ECHO_OUT_2 }}"
