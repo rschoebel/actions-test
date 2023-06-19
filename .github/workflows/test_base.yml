@@ -18,11 +18,15 @@ jobs:
     name: test
     runs-on: generic
     outputs:
-      ECHO_OUT: ${{ steps.echo.outputs.ECHO_OUT }}
+      ECHO_OUT: ${{steps.echo.outputs.ECHO_OUT}}
     steps:
       - name: echo
+        id: echo
         run: |
-            echo "ECHO_OUT=${{ inputs.ECHO }}" >> $GITHUB_OUTPUT
+          my_var="${{ inputs.ECHO }}"
+          echo "Output [$my_var]"
+          echo "my_var=$my_var" >> $GITHUB_OUTPUT     
+          echo "ECHO_OUT=$my_var" >> $GITHUB_OUTPUT
   test2:
     needs: test1
     name: test2
@@ -31,6 +35,7 @@ jobs:
     runs-on: generic
     steps:
         - name: echo2
+          id: echo2
           run: |
             echo "TEST: ${{ inputs.ECHO }}"
             echo "OUT: ${{ needs.test1.outputs.ECHO_OUT }}"

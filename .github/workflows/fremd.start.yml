@@ -1,0 +1,14 @@
+
+on:
+    workflow_dispatch:
+  
+jobs:
+  job1:
+    name: "Call other workflow"
+    uses: rschoebel/actions-test/.github/workflows/fremd.yml@captain
+  job2:
+    needs: job1
+    runs-on: generic
+    steps:
+      - name: "Print my_var"
+        run: echo my_var [${{needs.job1.outputs.my_var}}]

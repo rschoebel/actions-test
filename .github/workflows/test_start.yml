@@ -15,5 +15,5 @@ jobs:
     steps:
         - name: echo-2
           run: |
-            echo "TEST: ${{ job.test11.outputs.ECHO_OUT_1 }}"
-            echo "TEST: ${{ needs.test11.outputs.ECHO_OUT_2 }}"
+            echo "TEST1: ${{ needs.test11.outputs.ECHO_OUT_1 }}"
+            echo "TEST2: ${{ needs.test11.outputs.ECHO_OUT_2 }}"
