@@ -1,1 +1,1 @@
-![](https://byob.yarr.is/RubbaBoy/Example/time)
+![](https://byob.yarr.is/rschoebel/actions-test/time)
